@@ -93,6 +93,16 @@ public class BoKTele
                 speedCoef = SPEED_COEFF_FAST;
             }
 
+
+            // Method for opening and closing claws using Gamepad x and y
+            if (opMode.gamepad2.x) {
+                robot.closeClaw();
+            }
+
+            if (opMode.gamepad2.y) {
+                robot.openClaw();
+            }
+
             // GAMEPAD 2 CONTROLS
             // Left stick:             Upper Arm
             // Right stick:            Turntable
