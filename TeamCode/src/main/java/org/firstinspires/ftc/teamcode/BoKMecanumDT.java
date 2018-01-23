@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -30,11 +31,18 @@ public class BoKMecanumDT extends BoKHardwareBot
     private static final String RIGHT_BACK_MOTOR_NAME  = "rb";
     private static final String RIGHT_FRONT_MOTOR_NAME = "rf";
 
+    private static final String LEFT_CLAW_NAME = "lc";
+    private static final String RIGHT_CLAW_NAME = "rc";
+
     // Drive train motors
     public DcMotor leftBack;
     public DcMotor leftFront;
     public DcMotor rightBack;
     public DcMotor rightFront;
+
+    // Servo's for claws
+    public Servo leftClaw;
+    public Servo rightClaw;
 
     // Strafe target
     private int leftFrontTarget;
@@ -73,9 +81,34 @@ public class BoKMecanumDT extends BoKHardwareBot
         rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         setModeForDTMotors(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+
+
+        // Get reference to servo's to be used by Claws
+
+        leftClaw = opMode.hardwareMap.get(Servo.class, LEFT_CLAW_NAME);
+        if (leftClaw == null) {
+            return BoKHardwareStatus.BOK_HARDWARE_FAILURE;
+        }
+
+        rightClaw = opMode.hardwareMap.get(Servo.class, RIGHT_CLAW_NAME);
+        if (rightClaw == null) {
+            return BoKHardwareStatus.BOK_HARDWARE_FAILURE;
+        }
+
         // Drive train is initialized, initialize sensors
         return BoKHardwareStatus.BOK_HARDWARE_SUCCESS;
     }
+
+    protected void openClaw() {
+        leftClaw.setPosition(Servo.MAX_POSITION);
+        rightClaw.setPosition(Servo.MAX_POSITION);
+    }
+
+    protected void closeClaw() {
+        leftClaw.setPosition(Servo.MIN_POSITION);
+        rightClaw.setPosition(Servo.MIN_POSITION);
+    }
+
 
     /*
      * Set methods:
