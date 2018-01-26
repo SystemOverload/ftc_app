@@ -31,6 +31,9 @@ public class BoKMecanumDT extends BoKHardwareBot
     private static final String RIGHT_BACK_MOTOR_NAME  = "rb";
     private static final String RIGHT_FRONT_MOTOR_NAME = "rf";
 
+    private static final String GLYPH_LIFT_MOTOR_NAME = "gl";
+
+
     private static final String LEFT_CLAW_NAME = "lc";
     private static final String RIGHT_CLAW_NAME = "rc";
 
@@ -43,6 +46,9 @@ public class BoKMecanumDT extends BoKHardwareBot
     // Servo's for claws
     public Servo leftClaw;
     public Servo rightClaw;
+
+    //glyphLift motor
+    public DcMotor glyphLift;
 
     // Strafe target
     private int leftFrontTarget;
@@ -81,6 +87,14 @@ public class BoKMecanumDT extends BoKHardwareBot
         rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         setModeForDTMotors(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        // GlyphLift motor
+        glyphLift = opMode.hardwareMap.dcMotor.get(GLYPH_LIFT_MOTOR_NAME);
+        if (glyphLift == null) {
+            return BoKHardwareStatus.BOK_HARDWARE_FAILURE;
+        }
+
+        glyphLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        glyphLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
         // Get reference to servo's to be used by Claws
@@ -107,6 +121,10 @@ public class BoKMecanumDT extends BoKHardwareBot
     protected void closeClaw() {
         leftClaw.setPosition(Servo.MIN_POSITION);
         rightClaw.setPosition(Servo.MIN_POSITION);
+    }
+
+    protected void glyphLiftSetPower(double speed) {
+        glyphLift.setPower(speed);
     }
 
 

@@ -83,6 +83,9 @@ public abstract class BoKHardwareBot
     protected abstract void closeClaw();
     protected abstract void openClaw();
 
+    protected abstract void glyphLiftSetPower(double speed);
+
+
     /*
      *
      * waitForTick implements a periodic delay. However, this acts like a metronome with a regular

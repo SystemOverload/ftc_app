@@ -103,6 +103,11 @@ public class BoKTele
                 robot.openClaw();
             }
 
+            double gamePad2LeftStickX = opMode.gamepad2.left_stick_x;
+
+            robot.glyphLiftSetPower(gamePad2LeftStickX);
+
+
             // GAMEPAD 2 CONTROLS
             // Left stick:             Upper Arm
             // Right stick:            Turntable
